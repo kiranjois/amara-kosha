@@ -19,8 +19,8 @@ import android.view.View;
  */
 public class FullscreenActivity extends Activity {
     /**
-     * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
+     * Whether or not the system UI should be auto-hidden after
      */
     private static final boolean AUTO_HIDE = true;
 
