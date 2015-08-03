@@ -1,9 +1,10 @@
 <resources>
     <color name="black_overlay">#66000000</color>
-    <color name="primary">#2196F3</color>
-    <color name="primary_material_dark">#1976D2</color>
-    <color name="accent">#2196F3</color>
-    <color name="windowBackground">#FFFFFF</color>
-    <color name="editText">#000000</color>
-    <color name="textColor">#000000</color>
+    <color name="primary">#3949AB</color>
+    <color name="primary_material_dark">#283593</color>
+    <color name="accent">#F06292</color>
+    <color name="windowBackground">#5C6BC0</color>
+    <color name="editText">#FFFFFF</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+        <color name="buttonNormal">#F06292</color>
 </resources>

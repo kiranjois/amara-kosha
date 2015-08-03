@@ -11,7 +11,8 @@
         <item name="android:colorAccent">@color/accent</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:editTextColor">@color/editText</item>
-        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:colorButtonNormal">@color/buttonNormal</item>
     </style>
 
     <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
