@@ -1,5 +1,9 @@
 <resources>
-
     <color name="black_overlay">#66000000</color>
-
+    <color name="primary">#2196F3</color>
+    <color name="primary_material_dark">#1976D2</color>
+    <color name="accent">#2196F3</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="editText">#000000</color>
+    <color name="textColor">#000000</color>
 </resources>

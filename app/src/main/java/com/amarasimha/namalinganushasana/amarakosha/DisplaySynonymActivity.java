@@ -1,5 +1,6 @@
 package com.amarasimha.namalinganushasana.amarakosha;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -16,13 +17,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-public class DisplaySynonymActivity extends ActionBarActivity {
+public class DisplaySynonymActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        String inputText = intent.getStringExtra(SearchActivity.EXTRA_MESSAGE);
+        String inputText = intent.getStringExtra(WordSearchActivity.EXTRA_MESSAGE);
         try {
             InputStream is = getAssets().open("dictionary.json");
             int size = is.available();
@@ -46,7 +47,7 @@ public class DisplaySynonymActivity extends ActionBarActivity {
 
                 TextView textView = new TextView(this);
                 textView.setText(resultText);
-                textView.setTextSize(20);
+                textView.setTextSize(10);
                 setContentView(textView);
             } catch (JSONException e) {
                 e.printStackTrace();
