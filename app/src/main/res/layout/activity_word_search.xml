@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:id="@+id/search_layout"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".WordSearchActivity"
+    android:weightSum="1"
+    android:textAlignment="center"
+    android:touchscreenBlocksFocus="false">
+
+    <TextView
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Namaste Samskruta Premi!"
+        android:id="@+id/textView2"
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:layout_weight="0.02" />
+
+    <EditText
+        android:id="@+id/edit_message"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/word"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:longClickable="true"/>
+
+    <Button
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/search_button"
+        android:layout_weight="0.02"
+        android:onClick="displaySearchResults"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/edit_message"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:id="@+id/search_result_layout"
+        android:weightSum="1"
+        android:layout_below="@+id/search_button"
+        android:layout_alignStart="@+id/edit_message">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/search_result_view"
+            android:layout_marginTop="30dp"
+            android:layout_weight="0.14" />
+
+    </LinearLayout>
+
+</RelativeLayout>

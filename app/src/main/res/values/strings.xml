@@ -10,4 +10,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_display_synonym">Search Result</string>
     <string name="title_activity_word_search">Amarakosha</string>
+    <string name="word_search_result_word_not_found">Sorry! Word not found in Amarakosha</string>
+    <string name="word_search_result_label_word">Word: </string>
+    <string name="word_search_result_label_synonyms">Synonyms: </string>
+    <string name="word_search_result_label_varga">Varga: </string>
+    <string name="word_search_result_label_shloka">Shloka: </string>
 </resources>

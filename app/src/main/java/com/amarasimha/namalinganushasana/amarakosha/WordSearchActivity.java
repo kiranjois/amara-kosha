@@ -10,8 +10,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amarasimha.namalinganushasana.amarakosha.dao.WordSearchDAO;
+import com.amarasimha.namalinganushasana.amarakosha.httpclient.MongoDbRestClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +25,8 @@ import java.util.Random;
 public class WordSearchActivity extends Activity {
 
     public static final String EXTRA_MESSAGE = "com.amarasimha.namalinganushasana.amarakosha.MESSAGE";
-    private static final String[] words = {"स्वर", "अव्ययं", "स्वर्ग", "नाक", "त्रिदिव", "त्रिदशालया:", "सुरलोक", "दिव"};
+    private static final String[] WORDS = {"स्वर", "अव्ययं", "स्वर्ग", "नाक", "त्रिदिव", "त्रिदशालया:", "सुरलोक", "दिव"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,48 +58,59 @@ public class WordSearchActivity extends Activity {
     public void displaySearchResults(View view) {
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String inputText = editText.getText().toString();
-        String resultText = getSynonyms(inputText);
-        updateSearchResultView(resultText);
+        getSynonyms(inputText);
     }
 
     /**
-     * Method to retrieve synonyms from dictionary
+     * Method to retrieve synonyms from Amarakosha Datasource
      * @param inputText
      * @return
      */
-    private String getSynonyms(String inputText)
+    private void getSynonyms(String inputText)
     {
-        StringBuffer resultText = new StringBuffer("No such word");
-
         Random randomNumber = new Random();
-        inputText = words[randomNumber.nextInt(9)];
-        /*RequestParams params = new RequestParams("word", inputText);
-        MongoDbRestClient.get("words", params, new JsonHttpResponseHandler(){
+        inputText = WORDS[randomNumber.nextInt(8)];
+        StringBuilder reqParamJsonString = new StringBuilder("{'word':'").append(inputText).append("'}");
+        RequestParams params = new RequestParams("q", reqParamJsonString);
+        MongoDbRestClient.get("/", params, new JsonHttpResponseHandler() {
+
+            String result = null;
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                System.out.println(response);
+            public void onSuccess(int statusCode, Header[] headers, JSONArray responseArray) {
+                try {
+                    StringBuilder resultText = new StringBuilder();
+                    if(responseArray != null && responseArray.length() > 0) {
+                        JSONObject responseJson = responseArray.getJSONObject(0);
+                        if(responseJson != null) {
+                            resultText.append(getString(R.string.word_search_result_label_word))
+                                    .append(responseJson.getString("word")).append("\n");
+                            JSONArray synonymArray = responseJson.getJSONObject("metadata").getJSONArray("synonyms");
+                            String synonyms = synonymArray.join(",");
+                            resultText.append(getString(R.string.word_search_result_label_synonyms))
+                                    .append(synonyms).append("\n");
+                            resultText.append(getString(R.string.word_search_result_label_varga))
+                                    .append(responseJson.getJSONObject("metadata").getString("varga")).append("\n");
+                            resultText.append(getString(R.string.word_search_result_label_shloka))
+                                    .append(responseJson.getJSONObject("metadata").getString("shloka"));
+                        }
+                    }
+                    else {
+                        resultText.append(getString(R.string.word_search_result_word_not_found));
+                    }
+                    updateSearchResultView(resultText.toString());
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 System.out.println(errorResponse);
+                System.out.println("REST call failed!");
             }
-        });*/
-        WordSearchDAO wordSearchDao = new WordSearchDAO();
-        JSONObject wordJson = wordSearchDao.getWordSynonyms(inputText);
-        try {
-            if(wordJson != null) {
-                resultText = new StringBuffer();
-                resultText.append("Word: ").append(wordJson.getString("word")).append("\n");
-                resultText.append("Synonyms: ").append(wordJson.getJSONObject("metadata").getString("synonyms")).append("\n");
-                resultText.append("Varga: ").append(wordJson.getJSONObject("metadata").getString("varga")).append("\n");
-                resultText.append("Shloka: ").append(wordJson.getJSONObject("metadata").getString("shloka"));
-            }
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return resultText.toString();
+        });
+
     }
 
     /**
