@@ -5,6 +5,8 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="hello_world">Namaskara Samskruta Premi!</string>
+    <string name="search_word">Search</string>
+    <string name="transliterate">Transliterate</string>
     <string name="word">Your word here</string>
     <string name="under_construction">This app is under construction</string>
     <string name="action_settings">Settings</string>

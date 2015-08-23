@@ -7,10 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amarasimha.namalinganushasana.amarakosha.httpclient.MongoDbRestClient;
+import com.amarasimha.namalinganushasana.amarakosha.transliteration.Transliterator;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -26,6 +27,7 @@ public class WordSearchActivity extends Activity {
 
     public static final String EXTRA_MESSAGE = "com.amarasimha.namalinganushasana.amarakosha.MESSAGE";
     private static final String[] WORDS = {"स्वर", "अव्ययं", "स्वर्ग", "नाक", "त्रिदिव", "त्रिदशालया:", "सुरलोक", "दिव"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,14 @@ public class WordSearchActivity extends Activity {
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String inputText = editText.getText().toString();
         getSynonyms(inputText);
+    }
+
+    public void transliterate(View view) {
+        EditText editText = (EditText) findViewById(R.id.edit_message);
+        String inputText = editText.getText().toString();
+        Transliterator transliterator = new Transliterator();
+        String transText = transliterator.print_many_words(inputText);
+        printTransliteratedText(transText);
     }
 
     /**
@@ -118,11 +128,24 @@ public class WordSearchActivity extends Activity {
      * @param resultText
      */
     private void updateSearchResultView(String resultText){
-        LinearLayout layout = (LinearLayout) findViewById(R.id.search_result_layout);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.search_layout);
         TextView searchResultView = (TextView) layout.findViewById(R.id.search_result_view);
         searchResultView.setText(resultText);
         searchResultView.setTextSize(15);
         LayoutTransition transition = layout.getLayoutTransition();
         transition.enableTransitionType(LayoutTransition.CHANGING);
+    }
+
+    /**
+     * Method that prints the transliterated text
+     * @param transText
+     */
+    private void printTransliteratedText(String transText){
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.search_layout);
+        TextView searchResultView = (TextView) layout.findViewById(R.id.transliteration_view);
+        searchResultView.setText(transText);
+        searchResultView.setTextSize(15);
+        //LayoutTransition transition = layout.getLayoutTransition();
+        //transition.enableTransitionType(LayoutTransition.APPEARING);
     }
 }
